@@ -1,18 +1,19 @@
-
 # CGAN: RGB to Depth
-El siguiente proyecto se realizo con el objetivo de remplazar el sensor kinect v1 con una camara convencional RGB, este proyecto deriva del articulo "Peruvian sign languge recognition using a hybrid deep neural network" que sera publicado proximamente y cuyo codigo y dataset se podra encontrar en el siguiente enlace. https://github.com/videoLSP/VideoLSP10 <br>
-<h3>
-<strong>(Fig.0) Arquitectura del paper Peruvian Sign Languge Recognition Using a Hybrid Deep Neural Network:</strong>
-</h3> <br>
+El presente trabajo surge como una segunda opcion para remplazar el sensor kinect v1 del siguiente articulo cientifico: https://link.springer.com/chapter/10.1007/978-3-030-46140-9_16 mediante una camara convencional RGB.
 
-<div class="row">
-  <div class="column" style="width: 100%;  text-align:center">
-      <div>
-          <img src="./img/lsp.png" alt="Snow" style="width:100%">
-      </div>
-  </div>
-</div> 
-<br>
+In GAN, two models are trained Generative model G and Discriminative model D. The training procedure for G is to maximize the probability of D making a mistake. This framework corresponds to a minimax two-player game.
+
+$$ \underset{G}min \, \underset{D}max \, V(D,G) = \textrm{E}_{x\sim p_{data(x)}[logD(x)]}+\textrm{E}_{z\sim p_{z}(z)[log(1-D(G(Z)))]}$$
+
+
+<ul>
+    <li>
+        G and D are both trained simultaneously.
+    </li>
+    <li>
+        Parameters for G are trained to minimize log(1-D(G(z)), and parameters for D are trained to minimize logD(x), following the above two-player min-max game with value function V(D,G).
+    </li>
+</ul>
 
 ## 1) Generator
 
@@ -214,7 +215,7 @@ class Generator(tf.keras.Model):
         self.conv0 = conv_block(3, [32, 32, 128], stage=1, block='a')
         self.conv1 = identity_block(3, [32, 32, 128], stage=1, block='b')
         
-        self.conv2 = conv_block(3, [64, 64, 256], stage=2, block='a')
+        self.conv2 = conv_block(3, [64, 64, 256], stage=2, block='a', s=1)
         self.conv3 = identity_block(3, [64, 64, 256], stage=2, block='b')
         self.conv4 = identity_block(3, [64, 64, 256], stage=2, block='c')
 
@@ -609,3 +610,8 @@ for i,[input_image, target] in enumerate(data):
 
 # Autor
 Yuri vladimir huallpa vargas    yurihuallpavargas@gmail.com
+
+
+```python
+
+```
